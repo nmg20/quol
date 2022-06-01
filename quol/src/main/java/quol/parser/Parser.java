@@ -12,6 +12,7 @@ import javax.sound.sampled.TargetDataLine;
 
 public class Parser {
 	public static String mainMixerName = "Controlador primario de sonido";
+	public static String targetMixerName = "Controlador primario de captura de sonido";
 	
 	public static AudioFormat format = new AudioFormat(
 			AudioFormat.Encoding.PCM_SIGNED,
@@ -46,7 +47,7 @@ public class Parser {
 		}
 	}*/
 	
-	public static void level() {
+	public static void levels() {
 		TargetDataLine line = null;
 		DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
 		if(!AudioSystem.isLineSupported(info)) {
@@ -118,6 +119,7 @@ public class Parser {
 	public static void main( String[] args) throws LineUnavailableException{
     	for (Mixer.Info mixerInfo : AudioSystem.getMixerInfo()) {
 			Mixer mixer = AudioSystem.getMixer(mixerInfo);
+			System.out.println("MIXER: "+mixer.getMixerInfo().getName());
 			try {
 				mixer.open();
 				for (Line.Info lineInfo : mixer.getSourceLineInfo()) {
@@ -135,9 +137,11 @@ public class Parser {
 			} catch (LineUnavailableException e) {
 				e.printStackTrace();
 			}
+			System.out.println("---------------");
 		}
+//    	printMixers();
 //    	getVolumeOfAllLines();
-    	level();
+//    	levels();
     }
 	
 	
